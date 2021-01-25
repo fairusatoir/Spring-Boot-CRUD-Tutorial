@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Department List</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #body{
+                margin: 150px auto 0px auto;
+                width: 50%;
+                float: right;
+            }
+
+            #body2{
+                margin: 40px auto 0px auto;
+                width: 50%;
+                float: left;
+            }
+
+            table, td{
+                margin: auto;
+                text-align: center;
+            }
+
+            input[type="submit"] {
+                display: block;
+                margin: 0 auto;
+            }
+
+            h2, h4{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="body">
+
+            <form th:object="${department}" th:action="@{/department/save}" method="POST">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Department ID </td>
+                            <td>: <input type="text" th:field="*{id}" /></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <td>Department Name</td>
+                            <td>: <input type="text" th:field="*{name}" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input type="submit" value="Save" name="Save"
+                       style="display: block;margin: 0 auto;margin-top: 1rem" />
+            </form>
+
+            </div>
+            <div id="body2">
+
+            <h2>Department List</h2><br>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Employee List</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="as : ${departments}">
+                        <td th:text="${as.id}"></td>
+                        <td th:text="${as.name}"></td>
+                        <td>
+                            <a th:href="@{'/employee/' + ${as.id}}">detail</a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/department/delete/' + ${as.id}}">delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

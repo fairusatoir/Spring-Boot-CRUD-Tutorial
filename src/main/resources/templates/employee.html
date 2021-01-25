@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Employee Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            #body{
+                margin: 150px auto 0px auto;
+                width: 50%;
+                float: right;
+            }
+
+            #body2{
+                margin: 40px auto 0px auto;
+                width: 50%;
+                float: left;
+            }
+
+            table, td{
+                margin: auto;
+                text-align: center;
+            }
+
+            input[type="submit"] {
+                display: block;
+                margin: 0 auto;
+            }
+
+            h2, h4{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="body">
+            <br>
+
+            <form th:object="${employee}" th:action="@{/employee/save/}+${departmentID}" method="POST">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Employee ID</td>
+                        <td>: <input type="text" th:field="*{id}" /></td>
+                    </tr>
+                    </tbody>
+                    <tbody>
+                    <tr>
+                        <td>Employee Name</td>
+                        <td>: <input type="text" th:field="*{name}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Department</td>
+                        <td>
+                            : <input type="text"
+                                     th:value="${departmentID.name}" disabled/></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <input type="submit" value="Save" name="Save"
+                       style="display: block;margin: 0 auto;margin-top: 1rem"/>
+            </form>
+
+        </div>
+        <div id="body2">
+
+            <h2>Employee</h2>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Department</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="em : ${employees}">
+                        <td th:text="${em.id}"></td>
+                        <td th:text="${em.name}"></td>
+                        <td th:text="${em.department.name}"></td>
+                        <td>
+                            <a th:href="@{ '/employee/delete/' + ${em.department.id} + '/' + ${em.id} }">delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(employees)}">
+                        <td colspan="4" >Data Not Found!</td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="/department">
+                <h4>back</h4>
+            </a>
+        </div>
+    </body>
+</html>
